@@ -1,0 +1,131 @@
+/* Estilos de la Cafetería Kiuvo */
+:root {
+  --cafe: #6f4e37;
+  --cafe-oscuro: #4b3324;
+  --crema: #faf6f0;
+  --borde: #e5dccf;
+  --texto: #2d2420;
+  --suave: #7a6c62;
+  --verde: #2f7d4f;
+  --rojo: #b3402f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--texto);
+  background: var(--crema);
+  line-height: 1.5;
+}
+a { color: var(--cafe); }
+h1 { margin: 0 0 .4rem; }
+h2 { margin: 1.5rem 0 .6rem; font-size: 1.2rem; }
+main { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+footer { text-align: center; padding: 1.5rem; color: var(--suave); font-size: .9rem; }
+.suave { color: var(--suave); }
+
+/* Barra de navegación */
+.barra {
+  background: var(--cafe-oscuro);
+  padding: .8rem 1rem;
+  display: flex; flex-wrap: wrap; gap: .8rem;
+  align-items: center; justify-content: space-between;
+}
+.barra a, .barra .enlace { color: #fff; text-decoration: none; }
+.marca { font-weight: 700; font-size: 1.2rem; }
+nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.en-linea { display: inline; }
+.enlace { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; }
+.contador {
+  background: #fff; color: var(--cafe-oscuro);
+  border-radius: 999px; padding: 0 .45rem; font-size: .8rem; font-weight: 700;
+}
+
+/* Botones */
+.boton {
+  display: inline-block; background: var(--cafe); color: #fff;
+  border: 1px solid var(--cafe); border-radius: 8px;
+  padding: .55rem 1rem; font: inherit; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+}
+.boton:hover { background: var(--cafe-oscuro); }
+.boton.secundario { background: #fff; color: var(--cafe); }
+.boton.secundario:hover { background: var(--crema); }
+.boton.pequeno { padding: .3rem .7rem; font-size: .9rem; }
+.barra .boton { background: #fff; color: var(--cafe-oscuro); border-color: #fff; }
+
+/* Mensajes */
+.mensaje { padding: .7rem 1rem; border-radius: 8px; border: 1px solid; margin: 0 0 1rem; }
+.mensaje.ok { background: #e8f5ec; border-color: #b7dcc4; color: #1f5a37; }
+.mensaje.error { background: #fbeae7; border-color: #edc1b9; color: #8a2c1f; }
+.mensaje.aviso { background: #fff6dd; border-color: #ecd9a0; color: #6b5310; }
+
+/* Portada */
+.portada {
+  background: #fff; border: 1px solid var(--borde); border-radius: 14px;
+  padding: 2.5rem 1.5rem; text-align: center;
+}
+.portada h1 { font-size: 2rem; }
+.portada p { color: var(--suave); max-width: 520px; margin: 0 auto 1.2rem; }
+
+/* Tarjetas de productos */
+.cuadricula { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.tarjeta {
+  background: #fff; border: 1px solid var(--borde); border-radius: 12px;
+  padding: 1rem; display: flex; flex-direction: column;
+}
+.tarjeta h3 { margin: .4rem 0 .2rem; }
+.descripcion { color: var(--suave); font-size: .92rem; margin: 0; flex: 1; }
+.precio { font-size: 1.3rem; font-weight: 700; margin: .6rem 0 0; }
+.stock { font-size: .85rem; color: var(--verde); margin: 0 0 .6rem; }
+.agotado { color: var(--rojo); font-weight: 600; }
+.etiqueta {
+  align-self: flex-start; background: var(--crema); border: 1px solid var(--borde);
+  border-radius: 999px; padding: .1rem .6rem; font-size: .78rem; color: var(--suave);
+}
+
+/* Filtros */
+.filtros { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.filtros a {
+  padding: .3rem .9rem; border-radius: 999px; border: 1px solid var(--borde);
+  background: #fff; text-decoration: none;
+}
+.filtros a.activo { background: var(--cafe); color: #fff; border-color: var(--cafe); }
+
+/* Formularios */
+.fila { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+input, select {
+  font: inherit; padding: .45rem .6rem;
+  border: 1px solid #cfc3b4; border-radius: 8px; background: #fff;
+}
+input[type=number] { width: 5rem; }
+label { display: block; margin-bottom: .9rem; font-weight: 600; font-size: .95rem; }
+label input:not([type=radio]):not([type=checkbox]), label select {
+  display: block; width: 100%; margin-top: .25rem; font-weight: 400;
+}
+label.opcion { font-weight: 400; }
+.panel { background: #fff; border: 1px solid var(--borde); border-radius: 12px; padding: 1.3rem; }
+.panel h2:first-child { margin-top: 0; }
+.angosto { max-width: 420px; margin: 1rem auto; }
+.dos-columnas { display: grid; grid-template-columns: 3fr 2fr; gap: 1rem; align-items: start; }
+@media (max-width: 700px) { .dos-columnas { grid-template-columns: 1fr; } }
+
+/* Tablas */
+.tabla-contenedor { overflow-x: auto; margin-bottom: 1rem; }
+table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--borde); }
+th, td { padding: .65rem .8rem; text-align: left; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+th { background: var(--crema); font-size: .85rem; color: var(--suave); }
+tr.total td, .resumen .total { font-weight: 700; }
+
+.resumen { list-style: none; padding: 0; }
+.resumen li { display: flex; justify-content: space-between; gap: 1rem; padding: .4rem 0; border-bottom: 1px solid var(--borde); }
+
+/* Estado del pedido */
+.estado {
+  display: inline-block; padding: .1rem .6rem; border-radius: 999px;
+  font-size: .82rem; font-weight: 600; text-transform: capitalize; vertical-align: middle;
+}
+.estado.pendiente { background: #fff6dd; color: #6b5310; }
+.estado.listo { background: #e3effb; color: #1d4f80; }
+.estado.entregado { background: #e8f5ec; color: #1f5a37; }
+.estado.cancelado { background: #fbeae7; color: #8a2c1f; }

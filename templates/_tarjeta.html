@@ -1,0 +1,17 @@
+{# Tarjeta de un producto; se incluye desde inicio.html y catalogo.html #}
+<article class="tarjeta">
+  <span class="etiqueta">{{ p.categoria }}</span>
+  <h3>{{ p.nombre }}</h3>
+  <p class="descripcion">{{ p.descripcion }}</p>
+  <p class="precio">{{ p.precio|dinero }}</p>
+  {% if p.stock > 0 %}
+    <p class="stock">{{ p.stock }} disponibles</p>
+    <form method="post" action="{{ url_for('agregar_al_carrito', producto_id=p.id) }}" class="fila">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="number" name="cantidad" value="1" min="1" max="{{ p.stock }}" aria-label="Cantidad">
+      <button class="boton">{{ 'Reservar' if p.tipo == 'almuerzo' else 'Agregar' }}</button>
+    </form>
+  {% else %}
+    <p class="stock agotado">Agotado</p>
+  {% endif %}
+</article>

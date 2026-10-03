@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Cafetería Kiuvo{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="barra">
+    <a class="marca" href="{{ url_for('inicio') }}">☕ Cafetería Kiuvo</a>
+    <nav>
+      {% if usuario and usuario.es_admin %}
+        <a href="{{ url_for('admin_pedidos') }}">Pedidos</a>
+        <a href="{{ url_for('admin_productos') }}">Menú e inventario</a>
+      {% else %}
+        <a href="{{ url_for('almuerzos') }}">Almuerzos</a>
+        <a href="{{ url_for('tienda') }}">Tienda</a>
+        <a href="{{ url_for('ver_carrito') }}">Carrito{% if items_carrito %} <span class="contador">{{ items_carrito }}</span>{% endif %}</a>
+        {% if usuario %}<a href="{{ url_for('mis_pedidos') }}">Mis pedidos</a>{% endif %}
+      {% endif %}
+      {% if usuario %}
+        <form method="post" action="{{ url_for('logout') }}" class="en-linea">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="enlace">Salir ({{ usuario.nombre }})</button>
+        </form>
+      {% else %}
+        <a href="{{ url_for('login') }}">Entrar</a>
+        <a class="boton pequeno" href="{{ url_for('registro') }}">Crear cuenta</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% for categoria, mensaje in get_flashed_messages(with_categories=true) %}
+      <p class="mensaje {{ categoria }}">{{ mensaje }}</p>
+    {% endfor %}
+    {% block contenido %}{% endblock %}
+  </main>
+
+  <footer>Cafetería Kiuvo</footer>
+</body>
+</html>
