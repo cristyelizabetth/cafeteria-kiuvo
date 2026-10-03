@@ -1,0 +1,13 @@
+# Entorno virtual
+venv/
+.venv/
+# Python
+__pycache__/
+*.pyc
+# Base de datos local (se crea sola al iniciar la app)
+cafeteria.db
+# Variables de entorno / secretos
+.env
+# Editor
+.vscode/
+.idea/
