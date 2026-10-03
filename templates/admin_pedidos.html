@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}Admin · Pedidos{% endblock %}
+{% block contenido %}
+<h1>Administración</h1>
+<div class="filtros">
+  <a class="activo" href="{{ url_for('admin_pedidos') }}">Pedidos</a>
+  <a href="{{ url_for('admin_productos') }}">Menú e inventario</a>
+</div>
+
+{% if pedidos %}
+<div class="tabla-contenedor">
+<table>
+  <tr><th>#</th><th>Cliente</th><th>Retiro</th><th>Total</th><th>Estado</th></tr>
+  {% for p in pedidos %}
+  <tr>
+    <td><a href="{{ url_for('ver_pedido', pedido_id=p.id) }}">{{ p.id }}</a></td>
+    <td>{{ p.cliente }}</td>
+    <td>{{ p.fecha_retiro }} · {{ p.hora_retiro }}</td>
+    <td>{{ p.total|dinero }}</td>
+    <td><span class="estado {{ p.estado }}">{{ p.estado }}</span></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% else %}
+<p>No hay pedidos.</p>
+{% endif %}
+{% endblock %}

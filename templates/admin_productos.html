@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}Admin · Inventario{% endblock %}
+{% block contenido %}
+<h1>Administración</h1>
+<div class="filtros">
+  <a href="{{ url_for('admin_pedidos') }}">Pedidos</a>
+  <a class="activo" href="{{ url_for('admin_productos') }}">Menú e inventario</a>
+</div>
+<p><a class="boton" href="{{ url_for('admin_producto_nuevo') }}">+ Nuevo producto</a></p>
+
+<div class="tabla-contenedor">
+<table>
+  <tr><th>Nombre</th><th>Tipo</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Visible</th><th></th></tr>
+  {% for p in productos %}
+  <tr>
+    <td>{{ p.nombre }}</td>
+    <td>{{ p.tipo }}</td>
+    <td>{{ p.categoria }}</td>
+    <td>{{ p.precio|dinero }}</td>
+    <td class="{{ 'agotado' if p.stock == 0 }}">{{ p.stock }}</td>
+    <td>{{ 'Sí' if p.activo else 'No' }}</td>
+    <td><a href="{{ url_for('admin_producto_editar', producto_id=p.id) }}">Editar</a></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titulo %}Admin · Producto{% endblock %}
+{% block contenido %}
+<form method="post" class="panel angosto">
+  <h1>{{ 'Editar producto' if producto else 'Nuevo producto' }}</h1>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Nombre <input type="text" name="nombre" value="{{ producto.nombre if producto }}" required></label>
+  <label>Descripción <input type="text" name="descripcion" value="{{ producto.descripcion if producto }}"></label>
+  <label>Tipo
+    <select name="tipo">
+      <option value="almuerzo" {{ 'selected' if producto and producto.tipo == 'almuerzo' }}>Almuerzo</option>
+      <option value="producto" {{ 'selected' if producto and producto.tipo == 'producto' }}>Producto de tienda</option>
+    </select>
+  </label>
+  <label>Categoría <input type="text" name="categoria" value="{{ producto.categoria if producto }}" placeholder="Bebidas, Snacks…"></label>
+  <label>Precio en dólares <input type="number" name="precio" step="0.01" min="0" value="{{ '%.2f'|format(producto.precio / 100) if producto }}" required></label>
+  <label>Stock disponible <input type="number" name="stock" min="0" value="{{ producto.stock if producto else 0 }}" required></label>
+  <label class="opcion"><input type="checkbox" name="activo" {{ 'checked' if not producto or producto.activo }}> Visible en el sitio</label>
+  <div class="fila">
+    <button class="boton">Guardar</button>
+    <a class="boton secundario" href="{{ url_for('admin_productos') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
