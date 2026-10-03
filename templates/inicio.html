@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contenido %}
+<section class="portada">
+  <h1>Tu almuerzo, sin hacer fila</h1>
+  <p>Reserva el almuerzo del día, compra bebidas y snacks, y pasa a recogerlos a la hora que elijas.</p>
+  <a class="boton" href="{{ url_for('almuerzos') }}">Ver almuerzos</a>
+  <a class="boton secundario" href="{{ url_for('tienda') }}">Ir a la tienda</a>
+</section>
+
+<h2>Almuerzos de hoy</h2>
+<div class="cuadricula">
+  {% for p in almuerzos %}{% include "_tarjeta.html" %}{% endfor %}
+</div>
+{% endblock %}

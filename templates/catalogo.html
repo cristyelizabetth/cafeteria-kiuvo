@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }} · Cafetería Kiuvo{% endblock %}
+{% block contenido %}
+<h1>{{ titulo }}</h1>
+<p class="suave">{{ subtitulo }}</p>
+
+<div class="cuadricula">
+  {% for p in productos %}{% include "_tarjeta.html" %}{% else %}<p>No hay productos disponibles.</p>{% endfor %}
+</div>
+{% endblock %}
