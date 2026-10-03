@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Confirmar pedido · Cafetería Kiuvo{% endblock %}
+{% block contenido %}
+<h1>Confirmar pedido</h1>
+<div class="dos-columnas">
+  <form method="post" class="panel">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <h2>Retiro</h2>
+    <label>Fecha de retiro
+      <input type="date" name="fecha_retiro" value="{{ hoy }}" min="{{ hoy }}" required>
+    </label>
+    <label>Hora de retiro
+      <input type="time" name="hora_retiro" value="12:00" min="07:00" max="18:00" required>
+    </label>
+
+    <h2>Pago</h2>
+    <p>El pedido se paga en caja al momento de recogerlo.</p>
+    <button class="boton">Confirmar pedido · {{ total|dinero }}</button>
+  </form>
+
+  <aside class="panel">
+    <h2>Resumen</h2>
+    <ul class="resumen">
+      {% for item in items %}
+      <li><span>{{ item.cantidad }} × {{ item.producto.nombre }}</span><span>{{ item.subtotal|dinero }}</span></li>
+      {% endfor %}
+      <li class="total"><span>Total</span><span>{{ total|dinero }}</span></li>
+    </ul>
+  </aside>
+</div>
+
+{% endblock %}

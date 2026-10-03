@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titulo %}Mis pedidos · Cafetería Kiuvo{% endblock %}
+{% block contenido %}
+<h1>Mis pedidos</h1>
+{% if pedidos %}
+<div class="tabla-contenedor">
+<table>
+  <tr><th>#</th><th>Retiro</th><th>Total</th><th>Estado</th><th></th></tr>
+  {% for p in pedidos %}
+  <tr>
+    <td>{{ p.id }}</td>
+    <td>{{ p.fecha_retiro }} · {{ p.hora_retiro }}</td>
+    <td>{{ p.total|dinero }}</td>
+    <td><span class="estado {{ p.estado }}">{{ p.estado }}</span></td>
+    <td><a href="{{ url_for('ver_pedido', pedido_id=p.id) }}">Ver detalle</a></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% else %}
+<p>Aún no has hecho pedidos. <a href="{{ url_for('almuerzos') }}">Reserva tu primer almuerzo</a>.</p>
+{% endif %}
+{% endblock %}

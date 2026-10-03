@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titulo %}Carrito · Cafetería Kiuvo{% endblock %}
+{% block contenido %}
+<h1>Tu carrito</h1>
+{% if items %}
+<div class="tabla-contenedor">
+<table>
+  <tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th></tr>
+  {% for item in items %}
+  <tr>
+    <td>{{ item.producto.nombre }}</td>
+    <td>{{ item.producto.precio|dinero }}</td>
+    <td>
+      <form method="post" action="{{ url_for('actualizar_carrito', producto_id=item.producto.id) }}" class="fila">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="number" name="cantidad" value="{{ item.cantidad }}" min="0" max="{{ item.producto.stock }}" aria-label="Cantidad">
+        <button class="boton pequeno secundario">Actualizar</button>
+      </form>
+    </td>
+    <td>{{ item.subtotal|dinero }}</td>
+  </tr>
+  {% endfor %}
+  <tr class="total"><td colspan="3">Total</td><td>{{ total|dinero }}</td></tr>
+</table>
+</div>
+<p class="suave">Pon la cantidad en 0 para quitar un producto.</p>
+<div class="fila">
+  <a class="boton" href="{{ url_for('checkout') }}">Continuar con el pedido</a>
+  <form method="post" action="{{ url_for('vaciar_carrito') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="boton secundario">Vaciar carrito</button>
+  </form>
+</div>
+{% else %}
+<p>Tu carrito está vacío. <a href="{{ url_for('almuerzos') }}">Ver almuerzos</a> o <a href="{{ url_for('tienda') }}">ir a la tienda</a>.</p>
+{% endif %}
+{% endblock %}

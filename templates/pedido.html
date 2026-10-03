@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titulo %}Pedido #{{ pedido.id }} · Cafetería Kiuvo{% endblock %}
+{% block contenido %}
+<h1>Pedido #{{ pedido.id }} <span class="estado {{ pedido.estado }}">{{ pedido.estado }}</span></h1>
+<div class="panel">
+  <p><strong>Retiro:</strong> {{ pedido.fecha_retiro }} a las {{ pedido.hora_retiro }}</p>
+  <p><strong>Pago:</strong> en caja al recoger</p>
+  <p class="suave">Pedido realizado el {{ pedido.creado }}</p>
+  <ul class="resumen">
+    {% for item in items %}
+    <li><span>{{ item.cantidad }} × {{ item.nombre }}</span><span>{{ (item.precio * item.cantidad)|dinero }}</span></li>
+    {% endfor %}
+    <li class="total"><span>Total</span><span>{{ pedido.total|dinero }}</span></li>
+  </ul>
+</div>
+{% if usuario.es_admin %}
+<p><a href="{{ url_for('admin_pedidos') }}">← Volver a pedidos</a></p>
+{% else %}
+<p><a href="{{ url_for('mis_pedidos') }}">← Volver a mis pedidos</a></p>
+{% endif %}
+{% endblock %}
