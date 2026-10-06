@@ -4,6 +4,14 @@
 <h1>{{ titulo }}</h1>
 <p class="suave">{{ subtitulo }}</p>
 
+<!-- Filtro por Categorías -->
+<div class="filtros-categoria" style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+  <a href="/" class="btn">Todas</a>
+  <a href="/?categoria=Bebidas" class="btn">Bebidas</a>
+  <a href="/?categoria=Snacks" class="btn">Snacks</a>
+  <a href="/?categoria=Almuerzos" class="btn">Almuerzos</a>
+</div>
+
 <div class="cuadricula">
   {% for p in productos %}{% include "_tarjeta.html" %}{% else %}<p>No hay productos disponibles.</p>{% endfor %}
 </div>

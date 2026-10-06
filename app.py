@@ -169,12 +169,19 @@ def inicio():
 
 
 def mostrar_catalogo(tipo, titulo, subtitulo):
-    productos = get_db().execute(
-        "SELECT * FROM productos WHERE tipo = ? AND activo = 1 ORDER BY categoria, nombre",
-        (tipo,)
-    ).fetchall()
-    return render_template("catalogo.html", productos=productos, titulo=titulo,
-                           subtitulo=subtitulo)
+    cat_filtro = request.args.get("categoria")
+    db = get_db()
+    if cat_filtro:
+        productos = db.execute(
+            "SELECT * FROM productos WHERE tipo = ? AND categoria = ? AND activo = 1 ORDER BY nombre",
+            (tipo, cat_filtro)
+        ).fetchall()
+    else:
+        productos = db.execute(
+            "SELECT * FROM productos WHERE tipo = ? AND activo = 1 ORDER BY categoria, nombre",
+            (tipo,)
+        ).fetchall()
+    return render_template("catalogo.html", productos=productos, titulo=titulo, subtitulo=subtitulo)
 
 
 @app.route("/almuerzos")
