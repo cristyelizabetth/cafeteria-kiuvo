@@ -12,7 +12,20 @@
     <td>{{ p.fecha_retiro }} · {{ p.hora_retiro }}</td>
     <td>{{ p.total|dinero }}</td>
     <td><span class="estado {{ p.estado }}">{{ p.estado }}</span></td>
-    <td><a href="{{ url_for('ver_pedido', pedido_id=p.id) }}">Ver detalle</a></td>
+   <td>
+    <a href="{{ url_for('ver_pedido', pedido_id=p.id) }}">Ver detalle</a>
+
+    {% if p.estado == "pendiente" %}
+    <form method="POST"
+          action="{{ url_for('cancelar_pedido', pedido_id=p.id) }}"
+          style="display:inline;">
+        <button type="submit"
+                onclick="return confirm('¿Seguro que deseas cancelar este pedido?')">
+            Cancelar pedido
+        </button>
+    </form>
+    {% endif %}
+</td>
   </tr>
   {% endfor %}
 </table>
