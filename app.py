@@ -328,6 +328,46 @@ def ver_pedido(pedido_id):
         "SELECT * FROM pedido_items WHERE pedido_id = ?", (pedido_id,)
     ).fetchall()
     return render_template("pedido.html", pedido=pedido, items=items)
+@app.route("/pedido/<int:pedido_id>/cancelar", methods=["POST"])
+@login_requerido
+def cancelar_pedido(pedido_id):
+    pedido = buscar_pedido(pedido_id)
+    db = get_db()
+
+    try:
+        # Solo permite cancelar pedidos que todavía estén pendientes
+        actualizado = db.execute(
+            "UPDATE pedidos SET estado = 'cancelado' "
+            "WHERE id = ? AND estado = 'pendiente'",
+            (pedido_id,)
+        )
+
+        if actualizado.rowcount == 0:
+            db.rollback()
+            flash("Este pedido ya no se puede cancelar.", "aviso")
+            return redirect(url_for("mis_pedidos"))
+
+        # Obtener los productos que pertenecen al pedido
+        items = db.execute(
+            "SELECT producto_id, cantidad FROM pedido_items WHERE pedido_id = ?",
+            (pedido_id,)
+        ).fetchall()
+
+        # Devolver las cantidades al inventario
+        for item in items:
+            db.execute(
+                "UPDATE productos SET stock = stock + ? WHERE id = ?",
+                (item["cantidad"], item["producto_id"])
+            )
+
+        db.commit()
+        flash("Pedido cancelado. Los productos fueron devueltos al inventario.", "ok")
+
+    except sqlite3.Error:
+        db.rollback()
+        flash("No se pudo cancelar el pedido.", "error")
+
+    return redirect(url_for("mis_pedidos"))
 
 
 # ------------------------------------------------------------------------ cuentas
