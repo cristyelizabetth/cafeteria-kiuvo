@@ -129,3 +129,21 @@ tr.total td, .resumen .total { font-weight: 700; }
 .estado.listo { background: #e3effb; color: #1d4f80; }
 .estado.entregado { background: #e8f5ec; color: #1f5a37; }
 .estado.cancelado { background: #fbeae7; color: #8a2c1f; }
+
+.info-local {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.info-bloque {
+  flex: 1 1 260px;
+  padding: 1rem 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.info-bloque ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
